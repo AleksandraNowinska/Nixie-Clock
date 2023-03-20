@@ -1,0 +1,6 @@
+{
+    "configuration": "cpu=16MHzatmega328",
+    "board": "arduino:avr:pro",
+    "programmer": "arduinoasispatmega32u4",
+    "port": "/dev/tty.usbserial-A50285BI"
+}
