@@ -1,3 +1,5 @@
+#include <MD_DS1307.h>
+#include <Wire.h>
 #define A1 3
 #define B1 4
 #define C1 5
@@ -19,6 +21,12 @@ char A[4] = {A1, A2, A3, A4};
 char B[4] = {B1, B2, B3, B4};
 char C[4] = {C1, C2, C3, C4};
 char D[4] = {D1, D2, D3, D4};
+int zero;
+int one;
+int two;
+int three;
+int hour;
+int minute;
 
 void setup() {
   pinMode(A1, OUTPUT);
@@ -44,15 +52,29 @@ void setup() {
     digitalWrite(C[i], HIGH);
     digitalWrite(D[i], HIGH);
   }
+  if (!RTC.isRunning())
+    RTC.control(DS1307_CLOCK_HALT, DS1307_OFF);
+//  Serial.begin(9600);
 }
 
 void loop() {
-  for (int i = 0; i < 10; i++) {
-  for (int m = 0; m < 4; m++){
-    writenumber(m, i);
-  }
-    delay(500);
-  }
+  RTC.readTime();
+  hour = RTC.h;
+  minute = RTC.m;
+  zero = (hour / 10) % 10;
+  one = hour % 10;
+  two =  (minute / 10) % 10;
+  three = minute % 10;
+//  Serial.println(zero);
+//  Serial.println(one);
+//  Serial.println(two);
+//  Serial.println(three);
+  writenumber(0, zero);
+  writenumber(1, one);
+  writenumber(2, two);
+  writenumber(3, three);
+  delay(1000);
+
 }
 
 void writenumber(int a, int b) {
